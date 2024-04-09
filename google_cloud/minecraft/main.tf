@@ -128,6 +128,7 @@ resource "google_compute_network" "minecraft" {
 
 # Open the firewall for Minecraft traffic
 resource "google_compute_firewall" "minecraft" {
+  # Drata: Configure [google_compute_firewall.log_config] to ensure that security-relevant events are logged to detect malicious activity
   name    = "minecraft"
   network = google_compute_network.minecraft.name
   # Minecraft client port
