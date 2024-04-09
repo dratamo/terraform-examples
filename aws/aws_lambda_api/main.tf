@@ -27,6 +27,7 @@ resource "aws_lambda_function" "local_zipfile" {
 
 # This aws_lambda_function is used when invoked with a zipfile in S3
 resource "aws_lambda_function" "s3_zipfile" {
+  # Drata: Configure [aws_lambda_function.vpc_config] to improve network monitoring capabilities and ensure network communication is restricted to trusted sources. If there is a need for your Lambda Function to access external endpoints this finding can be ignored
   count = "${var.function_s3_bucket == "" ? 0 : 1}"
 
   # These are SPECIFIC to the deployment method:
