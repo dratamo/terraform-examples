@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "this" {
     custom_origin_config {
       http_port              = "${var.origin_custom_port > 0 ? "${var.origin_custom_port}" : 80}"
       https_port             = "${var.origin_custom_port > 0 ? "${var.origin_custom_port}" : 443}"
-      origin_protocol_policy = "${local.url_protocol}-only"
+      origin_protocol_policy = "${local.url_protocol}-only" # Drata: origin.custom_origin_config.origin_protocol_policy should be set to any of https-only
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
 
