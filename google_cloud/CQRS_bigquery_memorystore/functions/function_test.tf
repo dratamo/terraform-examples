@@ -3,6 +3,7 @@ locals {
 }
 
 resource "google_cloudfunctions_function" "test" {
+  # Drata: Specify a Service Account in [google_cloudfunctions_function.service_account_email] to avoid using default Service Accounts
   name                  = "test"
   runtime               = "nodejs10"
   /* Testing has minimal resource requirements */
