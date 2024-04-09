@@ -3,6 +3,7 @@ locals {
 }
 
 resource "google_cloudfunctions_function" "prober" {
+  # Drata: Specify a Service Account in [google_cloudfunctions_function.service_account_email] to avoid using default Service Accounts
   name    = "prober"
   runtime = "nodejs10"
   /* Probing has minimal resource requirements */
