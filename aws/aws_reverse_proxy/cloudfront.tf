@@ -1,6 +1,8 @@
 # Create the CloudFront distribution through which the site contents will be served
 # https://www.terraform.io/docs/providers/aws/r/cloudfront_distribution.html
 resource "aws_cloudfront_distribution" "this" {
+  # Drata: Configure [aws_cloudfront_distribution.logging_config.bucket] to ensure that security-relevant events are logged to detect malicious activity
+  # Drata: Ensure that [aws_cloudfront_distribution.web_acl_id] is defined to inspect incoming requests and protect against common web application attacks. Ignore this finding if custom Web ACL policies are attached through AWS WAF resource
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "${var.default_root_object}"
@@ -18,7 +20,7 @@ resource "aws_cloudfront_distribution" "this" {
     custom_origin_config {
       http_port              = "${var.origin_custom_port > 0 ? "${var.origin_custom_port}" : 80}"
       https_port             = "${var.origin_custom_port > 0 ? "${var.origin_custom_port}" : 443}"
-      origin_protocol_policy = "${local.url_protocol}-only"
+      origin_protocol_policy = "${local.url_protocol}-only" # Drata: origin.custom_origin_config.origin_protocol_policy should be set to any of https-only
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
 
@@ -33,7 +35,7 @@ resource "aws_cloudfront_distribution" "this" {
     allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods         = ["GET", "HEAD"]
     target_origin_id       = "default"
-    viewer_protocol_policy = "${var.viewer_https_only ? "redirect-to-https" : "allow-all"}"
+    viewer_protocol_policy = "${var.viewer_https_only ? "redirect-to-https" : "allow-all"}" # Drata: default_cache_behavior.viewer_protocol_policy should be set to any of redirect-to-https
     compress               = true
 
     min_ttl     = "${var.cache_ttl_override >= 0 ? var.cache_ttl_override : 0}"     # for reference: AWS default is 0

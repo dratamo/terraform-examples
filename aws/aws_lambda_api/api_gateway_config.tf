@@ -13,6 +13,7 @@ resource "aws_api_gateway_deployment" "this" {
 }
 
 resource "aws_api_gateway_stage" "this" {
+  # Drata: Configure [aws_api_gateway_stage.access_log_settings] to ensure that security-relevant events are logged to detect malicious activity
   stage_name    = "${var.stage_name}"
   description   = "${var.comment_prefix}${var.api_domain}"
   rest_api_id   = "${aws_api_gateway_rest_api.this.id}"

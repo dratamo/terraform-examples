@@ -1,4 +1,5 @@
 resource "google_cloudfunctions_function" "update_historical" {
+  # Drata: Specify a Service Account in [google_cloudfunctions_function.service_account_email] to avoid using default Service Accounts
   name    = "update_historical"
   runtime = "nodejs10"
   /* Running BQ client has minimal resource requirements */

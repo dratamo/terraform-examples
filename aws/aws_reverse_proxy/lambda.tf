@@ -33,6 +33,7 @@ data "archive_file" "lambda_zip" {
 }
 
 resource "aws_lambda_function" "viewer_request" {
+  # Drata: Configure [aws_lambda_function.vpc_config] to improve network monitoring capabilities and ensure network communication is restricted to trusted sources. If there is a need for your Lambda Function to access external endpoints this finding can be ignored
   provider = "aws.us_east_1" # because: error creating CloudFront Distribution: InvalidLambdaFunctionAssociation: The function must be in region 'us-east-1'
 
   # lambda_zip.output_path will be absolute, i.e. different on different machines.
@@ -51,6 +52,7 @@ resource "aws_lambda_function" "viewer_request" {
 }
 
 resource "aws_lambda_function" "viewer_response" {
+  # Drata: Configure [aws_lambda_function.vpc_config] to improve network monitoring capabilities and ensure network communication is restricted to trusted sources. If there is a need for your Lambda Function to access external endpoints this finding can be ignored
   provider = "aws.us_east_1" # because: error creating CloudFront Distribution: InvalidLambdaFunctionAssociation: The function must be in region 'us-east-1'
 
   # lambda_zip.output_path will be absolute, i.e. different on different machines.
